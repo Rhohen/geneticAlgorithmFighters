@@ -36,7 +36,6 @@ def initFirstGen():
         print("personnage ", i, " :  point de vie ", listPersonnage[i].hp, " - attaque ", listPersonnage[i].attaque, " - defense ", listPersonnage[i].defense)
         fight(boss, listPersonnage[i])
         listPersonnage[i].value = round(500 - boss.currentHP)
-        print(listPersonnage[i].value)
         saveFighter(listPersonnage[i])
         boss.currentHP = 500
         i+=1
@@ -44,7 +43,16 @@ def initFirstGen():
         print("Fighter : point de vie ", bestFighters[i].hp, " - attaque ", bestFighters[i].attaque, " - defense ", bestFighters[i].defense, " - value ", bestFighters[i].value)
 
 def nextGen(generation):
-    i = generation
-    
-initFirstGen()
+    i = 0
+    listPersonnage = []
+    while i < 100:
+        listPersonnage.append(i)
+        selectedFighterBreeder = random.randint(0,4)
+        coefList = []
+        for j in range (3):
+            coefList.append(round(random.uniform(0.95,1.05),2))
+        
+        i+=1
 
+initFirstGen()
+nextGen(1)
