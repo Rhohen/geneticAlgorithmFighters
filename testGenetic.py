@@ -9,7 +9,8 @@ for i in range (10):
 def fight(boss, personnage):
     while (boss.currentHP and personnage.currentHP) > 0:
         boss.currentHP -= (personnage.attaque * (boss.defense/100))
-        personnage.currentHP -= (boss.attaque * (personnage.defense/100)) 
+        personnage.currentHP -= (boss.attaque * (personnage.defense/100))
+    personnage.currentHP = personnage.hp
 
 def saveFighter(personnage):
     j = 0
@@ -25,10 +26,10 @@ def saveFighter(personnage):
 
 def initFirstGen():
     listPersonnage = []
-    for i in range(1000):
+    for i in range(20):
         hp = random.randint(20,30)
-        atk = random.randint(7,11)
-        deff = random.randint(40,50)
+        atk = random.randint(5,11)
+        deff = random.randint(20,25)
         listPersonnage.append(Personne(hp,atk,deff,1))
         fight(boss, listPersonnage[i])
         listPersonnage[i].value = round(5000 - boss.currentHP)
@@ -45,14 +46,15 @@ def initFirstGen():
 def nextGen(generation):
     listPersonnage = []
     oldFighters = list(bestFighters)
-    for i in range (10000):
-        selectedFighterBreeder = random.randint(0,4)
+    for i in range (20):
+        selectedFighterBreederA = random.randint(0,4)
+        selectedFighterBreederB = random.randint(0,4)
         coefList = []
         for j in range (3):
             coefList.append(round(random.uniform(0.95,1.05),2))
-        listPersonnage.append(Personne(round(oldFighters[selectedFighterBreeder].hp*coefList[0]),
-                                     round(oldFighters[selectedFighterBreeder].attaque*coefList[1]),
-                                     round(oldFighters[selectedFighterBreeder].defense*coefList[2]),
+        listPersonnage.append(Personne(round(((oldFighters[selectedFighterBreederA].hp+oldFighters[selectedFighterBreederB].hp)/2)*coefList[0]),
+                                     round(((oldFighters[selectedFighterBreederA].attaque+oldFighters[selectedFighterBreederB].attaque)/2)*coefList[1]),
+                                     round(((oldFighters[selectedFighterBreederA].defense+oldFighters[selectedFighterBreederB].defense)/2)*coefList[2]),
                                      generation))
         fight(boss, listPersonnage[i])
         listPersonnage[i].value = round(5000 - boss.currentHP)
